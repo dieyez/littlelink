@@ -4,122 +4,405 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dieyez — Connect</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  <meta name="description" content="Explorer l'art, ressentir le design, révéler la culture. — Dieyez, Consultant Créatif">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=League+Spartan:wght@100;200;300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --cream: #0f0f0f;
+      --cream-2: #1a1a1a;
+      --ink: #EDE7DA;
+      --ink-60: rgba(237,231,218,.6);
+      --ink-40: rgba(237,231,218,.4);
+      --line: rgba(237,231,218,.14);
+      --terra: #C94F2D;
+      --title: "Orbitron", "Arial Narrow", sans-serif;
+      --accent: "League Spartan", system-ui, sans-serif;
+      --sans: "Geist", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+      --ease-out: cubic-bezier(.16,1,.3,1);
+      --ease: cubic-bezier(.22,.61,.36,1);
+    }
+
+    *, ::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: #0a0a0a;
-      color: #f5f5f5;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: var(--sans);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      padding: 60px 20px;
+      overflow-x: hidden;
     }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--ink); color: var(--cream); }
 
-    .container {
-      max-width: 420px;
+    /* ---- CONTAINER ---- */
+    .connect {
+      max-width: 480px;
       width: 100%;
-      text-align: center;
+      position: relative;
+      z-index: 2;
     }
 
-    .avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f7c948, #e0a800);
+    /* ---- HEADER ---- */
+    .connect-header { text-align: center; margin-bottom: 48px; }
+
+    .connect-eye {
+      width: 48px; height: 48px;
       margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      font-weight: 700;
-      color: #0a0a0a;
+      filter: drop-shadow(0 0 8px rgba(237,231,218,.3));
+    }
+    .eye-circle { stroke: var(--ink); stroke-width: 2; fill: none; }
+    .eye-white { fill: var(--cream-2); }
+    .eye-pupil { fill: var(--ink); animation: eyePulse 2s ease-in-out infinite; }
+    .eye-pupil-inner { fill: var(--cream-2); animation: pupilShine 2s ease-in-out infinite; }
+    @keyframes eyePulse {
+      0%, 100% { r: 8px; opacity: 1; }
+      45% { r: 8px; opacity: 1; }
+      50% { r: 1px; opacity: 0.3; }
+      55% { r: 8px; opacity: 1; }
+    }
+    @keyframes pupilShine {
+      0%, 100% { r: 2.5px; }
+      45% { r: 2.5px; }
+      50% { r: 0.5px; }
+      55% { r: 2.5px; }
     }
 
-    h1 {
-      font-size: 24px;
-      font-weight: 700;
+    .connect-logo {
+      font-family: var(--title);
+      font-weight: 900;
+      font-size: clamp(36px, 8vw, 56px);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
       margin-bottom: 8px;
-      letter-spacing: 1px;
+    }
+    .connect-logo span { color: var(--terra); }
+
+    .connect-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink-40);
+      margin-bottom: 24px;
     }
 
-    .bio {
-      font-size: 14px;
-      color: #a0a0a0;
-      line-height: 1.6;
-      margin-bottom: 32px;
+    .connect-sep {
+      width: 40px; height: 1px;
+      background: var(--terra);
+      margin: 24px auto;
     }
 
-    .links {
+    .connect-bio {
+      font-family: var(--accent);
+      font-weight: 100;
+      font-size: clamp(15px, 2.5vw, 18px);
+      line-height: 1.55;
+      color: var(--ink-60);
+      letter-spacing: -.005em;
+    }
+    .connect-bio em {
+      font-style: normal;
+      color: var(--terra);
+      font-weight: 300;
+    }
+
+    /* ---- LINKS ---- */
+    .connect-links {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .links a {
+    .connect-link {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 20px;
-      border-radius: 12px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      color: #f5f5f5;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: all 0.2s ease;
+      gap: 16px;
+      padding: 18px 24px;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .4s var(--ease);
+      cursor: pointer;
+    }
+    .connect-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--terra);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s var(--ease-out);
+      z-index: 0;
+    }
+    .connect-link:hover::before { transform: scaleX(1); }
+    .connect-link:hover { border-color: var(--terra); }
+    .connect-link:hover .link-num,
+    .connect-link:hover .link-text,
+    .connect-link:hover .link-label,
+    .connect-link:hover .link-arrow { color: var(--cream); }
+
+    .link-num {
+      font-family: var(--title);
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--terra);
+      position: relative; z-index: 1;
+      min-width: 32px;
     }
 
-    .links a:hover {
-      background: #252525;
-      border-color: #f7c948;
-      transform: translateY(-2px);
-    }
-
-    .links a .emoji {
-      font-size: 20px;
-    }
-
-    .footer {
-      margin-top: 40px;
+    .link-text {
+      font-family: var(--title);
+      font-weight: 700;
       font-size: 12px;
-      color: #444;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      position: relative; z-index: 1;
+      flex-grow: 1;
+      transition: color .4s var(--ease);
+    }
+
+    .link-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      position: relative; z-index: 1;
+      transition: color .4s var(--ease);
+    }
+
+    .link-arrow {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink-60);
+      position: relative; z-index: 1;
+      transition: color .4s var(--ease), transform .4s var(--ease);
+    }
+    .connect-link:hover .link-arrow { transform: translateX(4px); }
+
+    /* ---- FOOTER ---- */
+    .connect-footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .connect-footer a {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      transition: color .3s;
+    }
+    .connect-footer a:hover { color: var(--terra); }
+    .footer-copy {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(237,231,218,.2);
+      margin-top: 16px;
+    }
+
+    /* ---- REVEAL ANIM ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .8s var(--ease), transform .8s var(--ease);
+    }
+    .reveal.d1 { transition-delay: .08s; }
+    .reveal.d2 { transition-delay: .16s; }
+    .reveal.d3 { transition-delay: .24s; }
+    .reveal.d4 { transition-delay: .32s; }
+    .reveal.d5 { transition-delay: .40s; }
+    .reveal.d6 { transition-delay: .48s; }
+
+    /* ---- BG CANVAS ---- */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+      width: 100%; height: 100%;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="avatar">D</div>
-    <h1>DIEYEZ</h1>
-    <p class="bio">
-      ‣ Explorer l'art, ressentir le design, révéler la culture.<br>
-      ‣ Consultant Créatif
-    </p>
-    <div class="links">
-      <a href="https://www.youtube.com/@dieyez" target="_blank">
-        <span class="emoji">🎬</span> YouTube
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="connect">
+
+    <div class="connect-header reveal">
+      <svg class="connect-eye" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <circle class="eye-circle" cx="30" cy="30" r="25"/>
+        <circle class="eye-white" cx="30" cy="30" r="20"/>
+        <circle class="eye-pupil" cx="30" cy="30" r="8"/>
+        <circle class="eye-pupil-inner" cx="30" cy="27" r="2.5"/>
+      </svg>
+      <div class="connect-logo">DIEYEZ<span>.</span></div>
+      <div class="connect-label">IDX-00 / Connect</div>
+      <div class="connect-sep"></div>
+      <p class="connect-bio">
+        ‣ Explorer l'art, ressentir le design, révéler la culture.<br>
+        ‣ <em>Consultant Créatif</em>
+      </p>
+    </div>
+
+    <div class="connect-links">
+      <a href="https://www.youtube.com/@dieyez" target="_blank" rel="noopener" class="connect-link reveal d1">
+        <span class="link-num">01</span>
+        <span class="link-text">YouTube</span>
+        <span class="link-label">Chaîne</span>
+        <span class="link-arrow">↗</span>
       </a>
-      <a href="https://www.youtube.com/@dieyez" target="_blank">
-        <span class="emoji">🔴</span> Dernière vidéo
+      <a href="https://www.youtube.com/@dieyez" target="_blank" rel="noopener" class="connect-link reveal d2">
+        <span class="link-num">02</span>
+        <span class="link-text">Dernière vidéo</span>
+        <span class="link-label">New</span>
+        <span class="link-arrow">↗</span>
       </a>
-      <a href="https://www.instagram.com/dieyez_/" target="_blank">
-        <span class="emoji">📸</span> Instagram
+      <a href="https://www.instagram.com/dieyez_/" target="_blank" rel="noopener" class="connect-link reveal d3">
+        <span class="link-num">03</span>
+        <span class="link-text">Instagram</span>
+        <span class="link-label">@dieyez_</span>
+        <span class="link-arrow">↗</span>
       </a>
-      <a href="https://www.dailymotion.com/user/dieyez" target="_blank">
-        <span class="emoji">🎥</span> Dailymotion
+      <a href="https://www.dailymotion.com/user/dieyez" target="_blank" rel="noopener" class="connect-link reveal d4">
+        <span class="link-num">04</span>
+        <span class="link-text">Dailymotion</span>
+        <span class="link-label">Vidéos</span>
+        <span class="link-arrow">↗</span>
       </a>
-      <a href="https://dieyez.fr" target="_blank">
-        <span class="emoji">🌐</span> Site web
+      <a href="https://dieyez.fr" target="_blank" rel="noopener" class="connect-link reveal d5">
+        <span class="link-num">05</span>
+        <span class="link-text">Site web</span>
+        <span class="link-label">dieyez.fr</span>
+        <span class="link-arrow">↗</span>
       </a>
-      <a href="mailto:iam@dieyez.fr">
-        <span class="emoji">✉️</span> iam@dieyez.fr
+      <a href="mailto:iam@dieyez.fr" class="connect-link reveal d6">
+        <span class="link-num">06</span>
+        <span class="link-text">Contact</span>
+        <span class="link-label">iam@dieyez.fr</span>
+        <span class="link-arrow">↗</span>
       </a>
     </div>
-    <p class="footer">© 2026 Dieyez</p>
+
+    <div class="connect-footer reveal" style="transition-delay:.56s">
+      <a href="https://dieyez.fr">← dieyez.fr</a>
+      <div class="footer-copy">© Dieyez 2026</div>
+    </div>
+
   </div>
+
+  <script>
+    /* Reveal on load */
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+      }, 200);
+    });
+
+    /* Background connect-the-dots (simplified from main site) */
+    (function() {
+      const cv = document.getElementById('bg-canvas');
+      if (!cv) return;
+      const cx = cv.getContext('2d');
+
+      function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      let mx = 0, my = 0, tmx = 0, tmy = 0;
+      window.addEventListener('mousemove', e => {
+        tmx = e.clientX / window.innerWidth - .5;
+        tmy = e.clientY / window.innerHeight - .5;
+      }, { passive: true });
+
+      const N = [
+        { bx:.18, by:.12, bz:.75, ph:0.0  },
+        { bx:.72, by:.18, bz:.55, ph:1.4  },
+        { bx:.85, by:.38, bz:.82, ph:2.8  },
+        { bx:.62, by:.52, bz:.45, ph:0.9  },
+        { bx:.25, by:.48, bz:.68, ph:3.7  },
+        { bx:.42, by:.72, bz:.60, ph:5.2  },
+        { bx:.78, by:.78, bz:.72, ph:1.1  },
+        { bx:.12, by:.82, bz:.50, ph:4.0  },
+      ];
+
+      const E = [[0,1],[0,4],[1,2],[1,3],[2,3],[2,6],[3,4],[3,5],[3,6],[4,5],[4,7],[5,6],[5,7]];
+
+      let t = 0;
+      function frame() {
+        t += .0007;
+        mx += (tmx - mx) * .04;
+        my += (tmy - my) * .04;
+        cx.clearRect(0, 0, cv.width, cv.height);
+
+        const P = N.map(n => {
+          const dx = Math.sin(t * 1.1 + n.ph) * .015;
+          const dy = Math.cos(t * .8 + n.ph * 1.3) * .012;
+          return {
+            sx: (n.bx + dx + mx * n.bz * .08) * cv.width,
+            sy: (n.by + dy + my * n.bz * .06) * cv.height,
+            bz: n.bz,
+            coord: Math.abs(n.bx * 3500 + n.bz * 4200 + mx * n.bz * 950 + Math.sin(t * .45 + n.ph) * 200).toFixed(2)
+          };
+        });
+
+        /* Edges */
+        for (const [a, b] of E) {
+          const depth = (P[a].bz + P[b].bz) * .5;
+          cx.strokeStyle = `rgba(201,79,45,${(depth * .16).toFixed(3)})`;
+          cx.lineWidth = 1;
+          cx.setLineDash([4, 6]);
+          cx.beginPath();
+          cx.moveTo(P[a].sx, P[a].sy);
+          cx.lineTo(P[b].sx, P[b].sy);
+          cx.stroke();
+          cx.setLineDash([]);
+        }
+
+        /* Nodes + coordinate labels */
+        cx.font = '8px "Courier New",monospace';
+        for (const p of P) {
+          const base = .1 + p.bz * .18;
+          cx.beginPath();
+          cx.arc(p.sx, p.sy, 1.2 + p.bz * .8, 0, Math.PI * 2);
+          cx.fillStyle = `rgba(201,79,45,${(base * 2.2).toFixed(3)})`;
+          cx.fill();
+
+          const tw = cx.measureText(p.coord).width;
+          const lx = p.sx + 7, ly = p.sy - 9, lw = tw + 8, lh = 14;
+          cx.fillStyle = `rgba(8,8,8,${(base * 4.5).toFixed(3)})`;
+          cx.fillRect(lx, ly, lw, lh);
+          cx.strokeStyle = `rgba(201,79,45,${(base * 2).toFixed(3)})`;
+          cx.lineWidth = .5;
+          cx.strokeRect(lx, ly, lw, lh);
+          cx.fillStyle = `rgba(237,220,200,${(base * 2.8).toFixed(3)})`;
+          cx.fillText(p.coord, lx + 4, ly + 10);
+        }
+
+        requestAnimationFrame(frame);
+      }
+      frame();
+    })();
+  </script>
+
 </body>
 </html>
