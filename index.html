@@ -41,7 +41,6 @@
     a { color: inherit; text-decoration: none; }
     ::selection { background: var(--ink); color: var(--cream); }
 
-    /* ---- CONTAINER ---- */
     .connect {
       max-width: 480px;
       width: 100%;
@@ -52,28 +51,22 @@
     /* ---- HEADER ---- */
     .connect-header { text-align: center; margin-bottom: 48px; }
 
+    /* Eye with tracking pupil */
     .connect-eye {
-      width: 48px; height: 48px;
+      width: 56px; height: 56px;
       margin: 0 auto 20px;
+      position: relative;
+    }
+    .eye-svg {
+      width: 100%; height: 100%;
       filter: drop-shadow(0 0 8px rgba(237,231,218,.3));
     }
     .eye-circle { stroke: var(--ink); stroke-width: 2; fill: none; }
     .eye-white { fill: var(--cream-2); }
-    .eye-pupil { fill: var(--ink); animation: eyePulse 2s ease-in-out infinite; }
-    .eye-pupil-inner { fill: var(--cream-2); animation: pupilShine 2s ease-in-out infinite; }
-    @keyframes eyePulse {
-      0%, 100% { r: 8px; opacity: 1; }
-      45% { r: 8px; opacity: 1; }
-      50% { r: 1px; opacity: 0.3; }
-      55% { r: 8px; opacity: 1; }
-    }
-    @keyframes pupilShine {
-      0%, 100% { r: 2.5px; }
-      45% { r: 2.5px; }
-      50% { r: 0.5px; }
-      55% { r: 2.5px; }
-    }
+    .eye-pupil { fill: var(--ink); transition: transform .15s ease-out; }
+    .eye-pupil-inner { fill: var(--cream-2); transition: transform .15s ease-out; }
 
+    /* Logo glow */
     .connect-logo {
       font-family: var(--title);
       font-weight: 900;
@@ -83,8 +76,12 @@
       color: var(--ink);
       line-height: 1;
       margin-bottom: 8px;
+      text-shadow:
+        0 0 20px rgba(237,231,218,.15),
+        0 0 40px rgba(237,231,218,.08),
+        0 0 80px rgba(237,231,218,.04);
     }
-    .connect-logo span { color: var(--terra); }
+    .connect-logo span { color: var(--terra); text-shadow: 0 0 20px rgba(201,79,45,.3), 0 0 40px rgba(201,79,45,.15); }
 
     .connect-label {
       font-family: var(--sans);
@@ -94,12 +91,6 @@
       font-weight: 500;
       color: var(--ink-40);
       margin-bottom: 24px;
-    }
-
-    .connect-sep {
-      width: 40px; height: 1px;
-      background: var(--terra);
-      margin: 24px auto;
     }
 
     .connect-bio {
@@ -121,6 +112,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-top: 40px;
     }
 
     .connect-link {
@@ -218,13 +210,9 @@
     }
 
     /* ---- REVEAL ANIM ---- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-    }
+    .reveal { opacity: 0; transform: translateY(20px); }
     .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
+      opacity: 1; transform: translateY(0);
       transition: opacity .8s var(--ease), transform .8s var(--ease);
     }
     .reveal.d1 { transition-delay: .08s; }
@@ -249,15 +237,16 @@
   <div class="connect">
 
     <div class="connect-header reveal">
-      <svg class="connect-eye" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <circle class="eye-circle" cx="30" cy="30" r="25"/>
-        <circle class="eye-white" cx="30" cy="30" r="20"/>
-        <circle class="eye-pupil" cx="30" cy="30" r="8"/>
-        <circle class="eye-pupil-inner" cx="30" cy="27" r="2.5"/>
-      </svg>
+      <div class="connect-eye" id="eyeWrap">
+        <svg class="eye-svg" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <circle class="eye-circle" cx="30" cy="30" r="25"/>
+          <circle class="eye-white" cx="30" cy="30" r="20"/>
+          <circle class="eye-pupil" id="pupil" cx="30" cy="30" r="8"/>
+          <circle class="eye-pupil-inner" id="pupilInner" cx="30" cy="27" r="2.5"/>
+        </svg>
+      </div>
       <div class="connect-logo">DIEYEZ<span>.</span></div>
       <div class="connect-label">IDX-00 / Connect</div>
-      <div class="connect-sep"></div>
       <p class="connect-bio">
         ‣ Explorer l'art, ressentir le design, révéler la culture.<br>
         ‣ <em>Consultant Créatif</em>
@@ -277,22 +266,22 @@
         <span class="link-label">New</span>
         <span class="link-arrow">↗</span>
       </a>
-      <a href="https://www.instagram.com/dieyez_/" target="_blank" rel="noopener" class="connect-link reveal d3">
+      <a href="https://dieyez.fr" target="_blank" rel="noopener" class="connect-link reveal d3">
         <span class="link-num">03</span>
+        <span class="link-text">Portfolio</span>
+        <span class="link-label">Services & projets</span>
+        <span class="link-arrow">↗</span>
+      </a>
+      <a href="https://www.instagram.com/dieyez_/" target="_blank" rel="noopener" class="connect-link reveal d4">
+        <span class="link-num">04</span>
         <span class="link-text">Instagram</span>
         <span class="link-label">@dieyez_</span>
         <span class="link-arrow">↗</span>
       </a>
-      <a href="https://www.dailymotion.com/user/dieyez" target="_blank" rel="noopener" class="connect-link reveal d4">
-        <span class="link-num">04</span>
-        <span class="link-text">Dailymotion</span>
-        <span class="link-label">Vidéos</span>
-        <span class="link-arrow">↗</span>
-      </a>
-      <a href="https://dieyez.fr" target="_blank" rel="noopener" class="connect-link reveal d5">
+      <a href="https://www.tiktok.com/@dieyez_" target="_blank" rel="noopener" class="connect-link reveal d5">
         <span class="link-num">05</span>
-        <span class="link-text">Site web</span>
-        <span class="link-label">dieyez.fr</span>
+        <span class="link-text">TikTok</span>
+        <span class="link-label">@dieyez_</span>
         <span class="link-arrow">↗</span>
       </a>
       <a href="mailto:iam@dieyez.fr" class="connect-link reveal d6">
@@ -311,14 +300,39 @@
   </div>
 
   <script>
-    /* Reveal on load */
+    /* ---- Eye tracking mouse ---- */
+    (function() {
+      const eyeWrap = document.getElementById('eyeWrap');
+      const pupil = document.getElementById('pupil');
+      const pupilInner = document.getElementById('pupilInner');
+      const maxMove = 6; // max pixels the pupil can move from center
+
+      document.addEventListener('mousemove', (e) => {
+        const rect = eyeWrap.getBoundingClientRect();
+        const eyeCx = rect.left + rect.width / 2;
+        const eyeCy = rect.top + rect.height / 2;
+
+        const dx = e.clientX - eyeCx;
+        const dy = e.clientY - eyeCy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const clamp = Math.min(dist, 200) / 200; // normalize 0-1
+
+        const moveX = (dx / (dist || 1)) * maxMove * clamp;
+        const moveY = (dy / (dist || 1)) * maxMove * clamp;
+
+        pupil.setAttribute('transform', `translate(${moveX}, ${moveY})`);
+        pupilInner.setAttribute('transform', `translate(${moveX}, ${moveY})`);
+      });
+    })();
+
+    /* ---- Reveal on load ---- */
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
       }, 200);
     });
 
-    /* Background connect-the-dots (simplified from main site) */
+    /* ---- Background connect-the-dots ---- */
     (function() {
       const cv = document.getElementById('bg-canvas');
       if (!cv) return;
@@ -335,14 +349,14 @@
       }, { passive: true });
 
       const N = [
-        { bx:.18, by:.12, bz:.75, ph:0.0  },
-        { bx:.72, by:.18, bz:.55, ph:1.4  },
-        { bx:.85, by:.38, bz:.82, ph:2.8  },
-        { bx:.62, by:.52, bz:.45, ph:0.9  },
-        { bx:.25, by:.48, bz:.68, ph:3.7  },
-        { bx:.42, by:.72, bz:.60, ph:5.2  },
-        { bx:.78, by:.78, bz:.72, ph:1.1  },
-        { bx:.12, by:.82, bz:.50, ph:4.0  },
+        { bx:.18, by:.12, bz:.75, ph:0.0 },
+        { bx:.72, by:.18, bz:.55, ph:1.4 },
+        { bx:.85, by:.38, bz:.82, ph:2.8 },
+        { bx:.62, by:.52, bz:.45, ph:0.9 },
+        { bx:.25, by:.48, bz:.68, ph:3.7 },
+        { bx:.42, by:.72, bz:.60, ph:5.2 },
+        { bx:.78, by:.78, bz:.72, ph:1.1 },
+        { bx:.12, by:.82, bz:.50, ph:4.0 },
       ];
 
       const E = [[0,1],[0,4],[1,2],[1,3],[2,3],[2,6],[3,4],[3,5],[3,6],[4,5],[4,7],[5,6],[5,7]];
@@ -365,7 +379,6 @@
           };
         });
 
-        /* Edges */
         for (const [a, b] of E) {
           const depth = (P[a].bz + P[b].bz) * .5;
           cx.strokeStyle = `rgba(201,79,45,${(depth * .16).toFixed(3)})`;
@@ -378,7 +391,6 @@
           cx.setLineDash([]);
         }
 
-        /* Nodes + coordinate labels */
         cx.font = '8px "Courier New",monospace';
         for (const p of P) {
           const base = .1 + p.bz * .18;
