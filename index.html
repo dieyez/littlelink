@@ -51,7 +51,6 @@
     /* ---- HEADER ---- */
     .connect-header { text-align: center; margin-bottom: 48px; }
 
-    /* Eye with tracking pupil */
     .connect-eye {
       width: 56px; height: 56px;
       margin: 0 auto 20px;
@@ -66,7 +65,6 @@
     .eye-pupil { fill: var(--ink); transition: transform .15s ease-out; }
     .eye-pupil-inner { fill: var(--cream-2); transition: transform .15s ease-out; }
 
-    /* Logo glow */
     .connect-logo {
       font-family: var(--title);
       font-weight: 900;
@@ -184,6 +182,135 @@
     }
     .connect-link:hover .link-arrow { transform: translateX(4px); }
 
+    /* ---- MODAL CONTACT ---- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s var(--ease);
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--cream-2);
+      border: 1px solid var(--line);
+      max-width: 440px;
+      width: 100%;
+      padding: 40px 32px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform .5s var(--ease-out);
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: none; border: none;
+      color: var(--ink-40);
+      font-size: 20px;
+      cursor: pointer;
+      transition: color .3s;
+      font-family: var(--sans);
+    }
+    .modal-close:hover { color: var(--terra); }
+
+    .modal-title {
+      font-family: var(--title);
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .modal-sub {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink-40);
+      margin-bottom: 32px;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-form input,
+    .modal-form textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .3s;
+      resize: none;
+    }
+    .modal-form input::placeholder,
+    .modal-form textarea::placeholder { color: var(--ink-40); }
+    .modal-form input:focus,
+    .modal-form textarea:focus { border-bottom-color: var(--terra); }
+
+    .modal-form textarea { min-height: 100px; line-height: 1.5; }
+
+    .modal-submit {
+      margin-top: 8px;
+      background: var(--ink);
+      color: var(--cream);
+      border: none;
+      padding: 14px 24px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+      align-self: flex-start;
+    }
+    .modal-submit:hover { background: var(--terra); transform: translateY(-2px); }
+    .modal-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    .modal-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .modal-success .check {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--terra);
+    }
+    .modal-success p {
+      font-family: var(--accent);
+      font-weight: 200;
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .modal-success .modal-sub { margin-bottom: 0; }
+
     /* ---- FOOTER ---- */
     .connect-footer {
       text-align: center;
@@ -234,6 +361,37 @@
 
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
+  <!-- ============ MODAL CONTACT ============ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+
+      <form class="modal-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="5c317844-e843-4efe-9876-aa31eb176a2a">
+        <input type="hidden" name="source" value="Connect — Contact">
+        <input type="hidden" name="subject" value="Nouveau message via connect.dieyez.fr">
+        <!-- Honeypot anti-spam -->
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="modal-title">Parlons-en</div>
+        <div class="modal-sub">Un projet ? Une idée ? Écrivez-moi.</div>
+
+        <input type="text" name="name" placeholder="Votre nom" required>
+        <input type="email" name="email" placeholder="Votre email" required>
+        <textarea name="message" placeholder="Décrivez votre projet en quelques lignes..." required></textarea>
+
+        <button type="submit" class="modal-submit" id="submitBtn">Envoyer →</button>
+      </form>
+
+      <div class="modal-success" id="successMsg">
+        <div class="check">✓</div>
+        <p>Message envoyé</p>
+        <div class="modal-sub">Je vous réponds sous 48h.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE ============ -->
   <div class="connect">
 
     <div class="connect-header reveal">
@@ -269,7 +427,7 @@
       <a href="https://dieyez.fr" target="_blank" rel="noopener" class="connect-link reveal d3">
         <span class="link-num">03</span>
         <span class="link-text">Mes services</span>
-        <span class="link-label">DA & Production Vidéo</span>
+        <span class="link-label">Direction créative</span>
         <span class="link-arrow">↗</span>
       </a>
       <a href="https://www.instagram.com/dieyez_/" target="_blank" rel="noopener" class="connect-link reveal d4">
@@ -284,7 +442,7 @@
         <span class="link-label">@dieyez_</span>
         <span class="link-arrow">↗</span>
       </a>
-      <a href="mailto:iam@dieyez.fr" class="connect-link reveal d6">
+      <a href="#" onclick="openModal(); return false;" class="connect-link reveal d6">
         <span class="link-num">06</span>
         <span class="link-text">Contact</span>
         <span class="link-label">iam@dieyez.fr</span>
@@ -300,39 +458,94 @@
   </div>
 
   <script>
-    /* ---- Eye tracking mouse ---- */
+    /* ---- MODAL ---- */
+    const overlay = document.getElementById('modalOverlay');
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('successMsg');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function openModal() {
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi...';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+          setTimeout(() => {
+            closeModal();
+            setTimeout(() => {
+              form.style.display = '';
+              successMsg.style.display = 'none';
+              form.reset();
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Envoyer →';
+            }, 400);
+          }, 2500);
+        } else {
+          throw new Error();
+        }
+      } catch {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Erreur — Réessayer';
+        setTimeout(() => { submitBtn.textContent = 'Envoyer →'; }, 3000);
+      }
+    });
+
+    /* ---- EYE TRACKING ---- */
     (function() {
       const eyeWrap = document.getElementById('eyeWrap');
       const pupil = document.getElementById('pupil');
       const pupilInner = document.getElementById('pupilInner');
-      const maxMove = 6; // max pixels the pupil can move from center
+      const maxMove = 6;
 
       document.addEventListener('mousemove', (e) => {
         const rect = eyeWrap.getBoundingClientRect();
         const eyeCx = rect.left + rect.width / 2;
         const eyeCy = rect.top + rect.height / 2;
-
         const dx = e.clientX - eyeCx;
         const dy = e.clientY - eyeCy;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const clamp = Math.min(dist, 200) / 200; // normalize 0-1
-
+        const clamp = Math.min(dist, 200) / 200;
         const moveX = (dx / (dist || 1)) * maxMove * clamp;
         const moveY = (dy / (dist || 1)) * maxMove * clamp;
-
         pupil.setAttribute('transform', `translate(${moveX}, ${moveY})`);
         pupilInner.setAttribute('transform', `translate(${moveX}, ${moveY})`);
       });
     })();
 
-    /* ---- Reveal on load ---- */
+    /* ---- REVEAL ---- */
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
       }, 200);
     });
 
-    /* ---- Background connect-the-dots ---- */
+    /* ---- BACKGROUND DOTS ---- */
     (function() {
       const cv = document.getElementById('bg-canvas');
       if (!cv) return;
